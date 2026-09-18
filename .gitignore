@@ -1,0 +1,14 @@
+node_modules/
+cache/
+uploads/
+pages/
+temp/
+.env
+
+*.pdf
+*.zip
+*.pt
+*.bin
+*.onnx
+*.wasm
+*.dll

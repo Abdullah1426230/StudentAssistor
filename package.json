@@ -1,0 +1,28 @@
+{
+  "name": "student-assistor",
+  "version": "1.0.0",
+  "description": "Student Assistor using NodeJS + PDFJS + Ollama",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "electron": "electron ."
+  },
+  "dependencies": {
+    "axios": "^1.20.0",
+    "cors": "^2.8.6",
+    "cropperjs": "^2.2.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "fs-extra": "^11.4.0",
+    "google-translate-api-x": "^10.7.3",
+    "libretranslate": "^1.0.1",
+    "multer": "^2.2.0",
+    "pdfjs-dist": "^5.7.284",
+    "tesseract.js": "^6.0.1",
+    "uuid": "^13.0.2"
+  },
+  "devDependencies": {
+    "electron": "^38.8.6"
+  }
+}

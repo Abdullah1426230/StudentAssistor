@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Assistor</title>
+    <link rel="shortcut icon" href="../icon.ico" type="image/x-icon">
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"
+/ >
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    
+    
+</head>
+<body>
+
+    <header class="topbar">
+        <h1>Student Assistor</h1>
+
+        <div class="actions">
+            <button id="openVocabularyBtn">
+                المفردات
+            </button>
+
+           <button id="pasteImageBtn">
+    📋 ترجمة صورة من الحافظة
+</button>
+
+            <button id="stopAll">
+   حذف الذاكرة
+</button>
+
+<button id="startOCR">
+    OCR
+</button>
+<!-- <button id="cropBtn">
+    ✂️ تحديد منطقة
+</button>
+
+<button
+    id="translateCropBtn"
+    style="display:none;"
+>
+    ترجمة الجزء المحدد
+</button>
+
+<button
+    id="cancelCropBtn"
+    style="display:none;"
+>
+    إلغاء
+</button> -->
+
+<button id="snapshotBtn">
+    Snapshot
+</button>
+        </div>
+    </header>
+
+    <section class="upload-section">
+
+        <input
+            type="file"
+            id="pdfFile"
+            accept=".pdf"
+        >
+
+      
+
+    </section>
+
+    <section id="progressSection">
+
+        <div class="progress-header">
+
+            <span>تقدم الترجمة</span>
+
+            <span id="progressValue">
+                0%
+            </span>
+
+        </div>
+
+        <div class="progress-container">
+
+            <div
+                id="progressBar"
+                class="progress-bar"
+            ></div>
+
+        </div>
+
+    </section>
+
+    <section class="navigation-panel">
+
+        <button id="prevPage">
+            الصفحة السابقة
+        </button>
+
+        <div class="page-counter">
+
+    <input
+        type="number"
+        id="pageJump"
+        placeholder="رقم الصفحة"
+    >
+
+    <span id="currentPage">1</span>
+    /
+    <span id="totalPages">0</span>
+
+</div>
+
+        <button id="nextPage">
+            الصفحة التالية
+        </button>
+
+    </section>
+
+    <main class="viewer-layout">
+
+        <section class="pdf-container">
+
+           <img
+    id="pageImage"
+    style="
+        width:100%;
+        max-width:900px;
+        display:block;
+        margin:auto;
+    "
+>
+
+        </section>
+
+        <aside id="translationPanel">
+
+            <h2>الترجمة</h2>
+
+            <textarea
+    id="translationBox"
+    readonly
+>
+اختر ملف PDF للبدء
+</textarea>
+
+        </aside>
+
+    </main>
+ 
+    <section class="ocr-section">
+
+        <h3>
+            OCR استخراج النص من صورة
+        </h3>
+<!-- 
+        <button id="startOCR">
+            تشغيل OCR
+        </button> -->
+
+        <textarea
+            id="ocrResult"
+            readonly
+            placeholder="سيظهر النص المستخرج هنا..."
+        ></textarea>
+
+    </section>
+
+    <div
+    id="vocabularyModal"
+    class="modal hidden Qamous"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>
+                القاموس الشخصي
+            </h2>
+
+            <button id="closeVocabularyBtn">
+                إغلاق القاموس الشخصي
+            </button>
+<button id="deleteAllVocabularyBtn" style="display: block; margin: 0 auto;">
+    🗑️ حذف جميع المفردات
+</button>
+        </div>
+
+        <div class="vocabulary-toolbar">
+
+            <input
+                id="newWord"
+                placeholder="الكلمة"
+            >
+
+            <input
+                id="newMeaning"
+                placeholder="الترجمة"
+            >
+<hr>
+            <div class="btnnns">
+                <button id="addVocabularyBtn">
+                إضافة
+            </button>
+
+          <button id="exportVocabularyBtn">
+    تصدير JSON
+</button>
+
+<button id="exportPdfBtn">
+    تصدير PDF
+</button>
+            </div>
+
+<div class="importttt">
+    <input
+    type="file"
+    id="importVocabularyInput"
+    accept=".json"
+    hidden
+>
+
+<button id="importVocabularyBtn">
+    استيراد JSON
+</button>
+</div>
+
+        </div>
+<hr>
+        <div id="vocabularyList"></div>
+
+    </div>
+
+</div>
+
+    <div
+        id="loadingOverlay"
+        class="hidden"
+    >
+
+        <div class="loader-box">
+
+            <div class="spinner"></div>
+
+            <p>
+                جاري التحميل...
+            </p>
+<!-- <span id="pageNumber">1</span> -->
+        </div>
+
+    </div>
+
+    <textarea id="pageText" hidden></textarea>
+    <textarea id="cachedTranslation" hidden></textarea>
+
+<div id="selectionMenu" class="hidden">
+
+    <button id="translateSelectionBtn">
+        ترجمة
+    </button>
+
+    <button id="cancelSelectionBtn">
+        إلغاء
+    </button>
+
+</div>
+
+<div id="translationModal" class="hidden">
+
+    <div class="translation-modal-content">
+
+        <h3>النص المحدد</h3>
+
+        <textarea
+            id="selectedText"
+            readonly
+        ></textarea>
+
+        <h3>الترجمة</h3>
+
+        <textarea
+            id="selectedTranslation"
+            readonly
+        ></textarea>
+
+        <button id="closeTranslationModal">
+            إغلاق
+        </button>
+
+    </div>
+
+</div>
+
+
+<div id="snapshotModal" class="hidden">
+
+    <div class="modal-content">
+
+        <h2>
+            تحديد المنطقة
+        </h2>
+<div>
+
+            <button id="translateCropBtn">
+                ترجمة
+            </button>
+
+            <button id="closeSnapshotBtn">
+                إلغاء
+            </button>
+
+        </div>
+        <img
+    id="snapshotImage"
+    style="
+        max-width:100%;
+        max-height:400px;
+    "
+>
+
+
+        
+
+    </div>
+
+</div>
+    <script src="tesseract.min.js"></script>
+    <script src="js/cache.js"></script>
+    <script src="js/progress.js"></script>
+    <script src="js/pdfViewer.js"></script>
+    <!-- <script src="js/translator.js"></script> -->
+    <script src="js/vocabulary.js"></script>
+    <script src="js/ocr.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script type="module" src="js/app.js"></script>
+
+</body>
+</html>

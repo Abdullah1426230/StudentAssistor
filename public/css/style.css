@@ -1,0 +1,607 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Kufi Arabic",tahoma, sans-serif;
+}
+/* font-family: "IBM Plex Sans Arabic", sans-serif; */
+body {
+    background: #f5f7fb;
+    color: #222;
+    min-height: 100vh;
+}
+
+button{
+    cursor: pointer;
+}
+.Qamous input{
+    display: block;
+    width: 100%;
+    margin: 10px auto;
+    font-size: 16px;
+    padding: 10px;
+}
+.importttt{
+display: flex;
+    align-items: center;
+}
+hr{
+    height: 1px;
+    border: none;
+    background: darkblue;
+}
+.btnnns{
+display: flex;
+    justify-content: center;
+}
+#closeVocabularyBtn{
+    display: block;
+    width: 100%;
+    margin: 20px auto;
+}
+/* Header */
+
+.topbar {
+    background: #1e293b;
+    color: white;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 20px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actions button {
+    border: none;
+    border-radius: 8px;
+
+    padding: 10px 15px;
+
+    background: #2563eb;
+    color: white;
+
+    cursor: pointer;
+}
+
+/* Upload */
+
+.upload-section {
+    background: white;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 15px 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Progress */
+
+#progressSection {
+    background: white;
+    padding: 15px 20px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.progress-container {
+    width: 100%;
+    height: 12px;
+
+    background: #e2e8f0;
+
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+
+    background: #2563eb;
+
+    transition: width .3s;
+}
+
+/* Navigation */
+
+.navigation-panel {
+    background: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    padding: 15px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.navigation-panel button {
+    border: none;
+    border-radius: 8px;
+
+    padding: 10px 20px;
+
+    background: #10b981;
+    color: white;
+
+    cursor: pointer;
+}
+
+/* Layout */
+
+.viewer-layout {
+    display: grid;
+
+    grid-template-columns: minmax(0, 2fr) minmax(350px, 1fr);
+
+    gap: 0;
+
+    min-height: 700px;
+}
+
+/* PDF */
+
+.pdf-container {
+    background: #cbd5e1;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    overflow: auto;
+
+    padding: 20px;
+}
+
+#pdfCanvas {
+    background: white;
+
+    max-width: 100%;
+    height: auto;
+
+    box-shadow: 0 0 20px rgba(0,0,0,.15);
+}
+
+/* Translation Panel */
+
+#translationPanel {
+    background: white;
+
+    border-right: 1px solid #e5e7eb;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+}
+
+#translationPanel h2 {
+    margin-bottom: 15px;
+}
+
+#translationBox {
+    width: 100%;
+
+    flex: 1;
+
+    min-height: 500px;
+
+    resize: none;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+
+    padding: 15px;
+
+    background: #f8fafc;
+
+    color: #111827;
+
+    font-size: 16px;
+    line-height: 1.8;
+
+    direction: rtl;
+    text-align: right;
+}
+
+/* OCR */
+
+.ocr-section {
+    background: white;
+
+    padding: 20px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+#startOCR {
+    border: none;
+    border-radius: 8px;
+
+    padding: 10px 20px;
+
+    background: #f59e0b;
+    color: white;
+
+    cursor: pointer;
+}
+
+#ocrResult {
+    width: 100%;
+    height: 180px;
+
+    margin-top: 10px;
+
+    padding: 10px;
+
+    resize: vertical;
+}
+
+/* Modal */
+
+.modal {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,.4);
+
+    z-index: 1000;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.modal-content {
+    background: white;
+
+    width: 900px;
+    max-width: 95%;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    border-radius: 12px;
+
+    padding: 20px;
+}
+
+/* Loading */
+
+#loadingOverlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(255,255,255,.8);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader-box {
+    text-align: center;
+}
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+
+    .viewer-layout {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    #translationPanel {
+
+        border-right: none;
+        border-top: 1px solid #e5e7eb;
+
+    }
+
+    #translationBox {
+
+        min-height: 350px;
+
+    }
+}
+
+@media (max-width: 768px) {
+
+    .topbar {
+
+        flex-direction: column;
+        gap: 10px;
+
+    }
+
+    .navigation-panel {
+
+        flex-wrap: wrap;
+
+    }
+
+    #translationBox {
+
+        min-height: 300px;
+
+    }
+}
+#pageJump {
+    width: 100px;
+
+    padding: 8px 10px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+
+    text-align: center;
+
+    font-size: 15px;
+}
+.page-image {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    object-fit: contain;
+
+}
+#selectionMenu {
+
+    position: fixed;
+
+    z-index: 9999;
+
+    background: white;
+
+    border: 1px solid #ccc;
+
+    border-radius: 10px;
+
+    padding: 8px;
+
+    display: flex;
+
+    gap: 8px;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,.2);
+
+}
+
+.hidden {
+
+    display: none !important;
+
+}
+
+
+
+.translation-modal-content {
+overflow-y: auto;
+        width: 90%;
+        max-width: 700px;
+    margin: auto;
+    background: white;
+    border-radius: 5px;
+    padding: 20px;
+
+
+}
+textarea{
+    max-height: 400px;
+}
+
+.vocabulary-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.vocabulary-table th,
+.vocabulary-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.vocabulary-table th {
+    background: #1976d2;
+    color: white;
+}
+
+.vocabulary-table tr:nth-child(even) {
+    background: #f5f5f5;
+}
+
+.delete-word {
+    background: #d32f2f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.translation-modal-content textarea {
+
+    width: 100%;
+    overflow-y: auto;
+    resize: vertical;
+   min-height: 150px;
+    margin: 15px auto;
+    padding: 14px;
+    font-size: 18px;
+    line-height: 1.4;
+    max-height: 350px;
+
+}
+.vocab-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 10px;
+
+}
+
+.vocab-table th,
+.vocab-table td {
+
+    border: 1px solid #ddd;
+
+    padding: 10px;
+
+    text-align: center;
+
+}
+
+.vocab-table th {
+
+    background: #1976d2;
+
+    color: white;
+
+}
+
+.vocab-table tr:nth-child(even) {
+
+    background: #f5f5f5;
+
+}
+translation-modal-content textarea:first-of-type{
+    direction: ltr;
+}
+.modal-content h2{
+    padding: 10px;
+    background: darkcyan;
+    margin: 14px auto;
+    font-size: 30px;
+    text-align: center;
+    color: floralwhite;
+    border-radius: 5px;
+}
+.cropper-container{
+width: 100% !important;
+max-width: 700px;
+}
+.modal-content button{
+   outline: none;
+    padding: 10px 15px;
+    font-size: 20px;
+    background-color: brown;
+    color: wheat;
+    border: none;
+    margin: 12px 6px;
+}
+.translation-modal-content h3{
+    background: #154915;
+    padding: 10px 15px 15px 15px;
+    font-size: 30px;
+    text-align: center;
+    color: #fffefe;
+    border-radius: 5px;
+}
+.translation-modal-content button{
+    display: block;
+    width: 90%;
+    margin: auto;
+    border: none;
+    background: #cb3f3f;
+    padding: 15px;
+    border-radius: 3px;
+    font-size: 22px;
+    color: white;
+}
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+.ocr-section button{
+    margin: 15px 0;
+}
+.hidden {
+    display: none;
+}
+
+#snapshotModal,
+#translationModal {
+
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,.5);
+
+    z-index: 9999;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+
+    background: white;
+
+    width: 90%;
+    max-width: 1200px;
+
+    padding: 20px;
+
+    border-radius: 10px;
+}
+#translationModal {
+
+    position: fixed;
+    overflow-y: auto;
+    inset: 0;
+
+    background: rgba(0,0,0,.5);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 10000;
+
+}
+
+#translationModal textarea{
+    resize: none;
+}
+#translationModal textarea:first-of-type{
+    direction: ltr;
+}
+#ocrResult{
+    direction: ltr;
+}
+#snapshotImage {
+
+    max-width: 100%;
+    max-height: 80vh;
+}
