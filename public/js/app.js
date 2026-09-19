@@ -457,147 +457,7 @@ document
 
         }
     );
-// function startCropMode() {
 
-//     if (!pageImage.src) {
-//         return;
-//     }
-
-//     if (cropper) {
-
-//         cropper.destroy();
-
-//     }
-
-//     cropper =
-//         new Cropper(
-//             pageImage,
-//             {
-//                 viewMode: 1,
-//                 movable: false,
-//                 scalable: false,
-//                 zoomable: true
-//             }
-//         );
-
-//     document.getElementById(
-//         "translateCropBtn"
-//     ).style.display =
-//         "inline-block";
-
-//     document.getElementById(
-//         "cancelCropBtn"
-//     ).style.display =
-//         "inline-block";
-
-// }
-// document
-//     .getElementById(
-//         "cancelCropBtn"
-//     )
-//     .addEventListener(
-//         "click",
-//         () => {
-
-//             if (cropper) {
-
-//     cropper.destroy();
-
-//     cropper = null;
-
-// }
-
-// document.getElementById(
-//     "translateCropBtn"
-// ).style.display =
-//     "none";
-
-// document.getElementById(
-//     "cancelCropBtn"
-// ).style.display =
-//     "none";
-
-//         }
-//     );
-    // document
-//     .getElementById(
-//         "translateCropBtn"
-//     )
-//     .addEventListener(
-//         "click",
-//         async () => {
-
-//             if (!cropper) {
-//                 return;
-//             }
-
-//             const canvas =
-//                 cropper.getCroppedCanvas();
-
-//             const result =
-//                 await Tesseract.recognize(
-//                     canvas,
-//                     "eng"
-//                 );
-
-//             const text =
-//                 result.data.text;
-
-//             const response =
-//                 await fetch(
-//                     "/api/translate",
-//                     {
-//                         method: "POST",
-
-//                         headers: {
-//                             "Content-Type":
-//                                 "application/json"
-//                         },
-
-//                         body: JSON.stringify({
-//                             text
-//                         })
-//                     }
-//                 );
-
-//             const translation =
-//                 await response.json();
-
-//             document
-//                 .getElementById(
-//                     "selectedText"
-//                 ).value = text;
-
-//             document
-//                 .getElementById(
-//                     "selectedTranslation"
-//                 ).value =
-//                     translation.translation;
-
-//             document
-//                 .getElementById(
-//                     "translationModal"
-//                 )
-//                 .classList
-//                 .remove(
-//                     "hidden"
-//                 );
-//                 cropper.destroy();
-
-// cropper = null;
-
-// document.getElementById(
-//     "translateCropBtn"
-// ).style.display =
-//     "none";
-
-// document.getElementById(
-//     "cancelCropBtn"
-// ).style.display =
-//     "none";
-
-//         }
-//     );
 const pageNumberElement =
     document.getElementById("currentPage");
 const startOCRButton = document.getElementById("startOCR");
@@ -931,65 +791,7 @@ if (translationBox) {
 }
 
 
-// const snapshot = {
 
-//     page:
-//         currentPage,
-
-//     image:
-//         document.getElementById(
-//             "pageImage"
-//         ).src,
-
-//     translation:
-//         translationBox.value
-
-// };
-
-
-
-// function saveSnapshot() {
-
-//     const snapshot = {
-
-//         page:
-//             currentPage,
-
-//         image:
-//             pageImage.src,
-
-//         translation:
-//             translationBox.value,
-
-//         created:
-//             new Date()
-//                 .toISOString()
-
-//     };
-
-//     let snapshots =
-//         JSON.parse(
-//             localStorage.getItem(
-//                 "snapshots"
-//             ) || "[]"
-//         );
-
-//     snapshots.push(
-//         snapshot
-//     );
-
-//     localStorage.setItem(
-//         "snapshots",
-//         JSON.stringify(
-//             snapshots
-//         )
-//     );
-
-//     alert(
-//         `تم حفظ الصفحة ${currentPage}`
-//     );
-
-// }
 
 
 pageJump.addEventListener(
@@ -1259,26 +1061,6 @@ async function extractTextWithLayout(page) {
 
 
 
-// async function renderPage(pageNumber) {
-
-//     currentPage = pageNumber;
-
-//     const page =
-//         String(pageNumber)
-//             .padStart(3, "0");
-
-//     pageImage.src =
-//         `/pages/page-${page}.png`;
-
-//     if (pageNumberElement) {
-
-//         pageNumberElement.textContent =
-//             pageNumber;
-
-//     }
-
-// }
-
 async function renderPage(pageNumber) {
 
     currentPage = pageNumber;
@@ -1295,82 +1077,6 @@ async function renderPage(pageNumber) {
 
 }
 
-// async function showPreviousPage() {
-
-//     if (currentPage <= 1) {
-//         return;
-//     }
-
-//     currentPage--;
-// await fetch(
-//     "/api/render-pages",
-//     {
-//         method: "POST",
-
-//         headers: {
-//             "Content-Type":
-//                 "application/json"
-//         },
-
-//         body: JSON.stringify({
-//             filename:
-//                 currentPdfFilename,
-
-//             page:
-//                 currentPage
-//         })
-//     }
-// );
-//     await renderPage(currentPage);
-
-//     const page =
-//         await pdfDoc.getPage(
-//             currentPage
-//         );
-
-//     await translateCurrentPage(page);
-
-// }
-
-
-
-
-// async function showNextPage() {
-
-//     if (currentPage >= totalPages) {
-//         return;
-//     }
-
-//     currentPage++;
-//     await fetch(
-//     "/api/render-pages",
-//     {
-//         method: "POST",
-
-//         headers: {
-//             "Content-Type":
-//                 "application/json"
-//         },
-
-//         body: JSON.stringify({
-//             filename:
-//                 currentPdfFilename,
-
-//             page:
-//                 currentPage
-//         })
-//     }
-// );
-//     await renderPage(currentPage);
-
-//     const page =
-//         await pdfDoc.getPage(
-//             currentPage
-//         );
-
-//     await translateCurrentPage(page);
-
-// }
 
 async function showPreviousPage() {
 
@@ -1679,9 +1385,7 @@ console.log("Sending chunk:", chunks[i]);
                 finalTranslation;
 
         }
-//         extractVocabulary(
-//     extractedText
-// );
+
 
         if (
     finalTranslation &&
@@ -1756,49 +1460,6 @@ async function translateChunk(text) {
 
 }
 
-// async function translateChunk(text) {
-
-//     console.log("Sending:", text);
-
-//     const response = await fetch(
-//         "/api/translate",
-//         {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type":
-//                     "application/json"
-//             },
-//             body: JSON.stringify({
-//                 text
-//             })
-//         }
-//     );
-
-//     console.log(
-//         "STATUS:",
-//         response.status
-//     );
-
-//     const result =
-//         await response.json();
-
-//     console.log(
-//         "API RESULT:",
-//         result
-//     );
-
-//     if (!result.success) {
-
-//         throw new Error(
-//             result.error ||
-//             "Translation Failed"
-//         );
-
-//     }
-
-//     return result.translation || "";
-
-// }
 
 async function getCache(pageId) {
 
