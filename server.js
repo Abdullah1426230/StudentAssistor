@@ -628,7 +628,9 @@ const outputPrefix =
         pagesDir,
         "page"
     );
-
+console.log("START RENDER");
+console.log(pdfPath);
+console.log(startPage, endPage);
 exec(
     `${popplerCmd}
     -f ${startPage}
@@ -638,7 +640,7 @@ exec(
     "${outputPrefix}"`,
 
     (error) => {
-
+console.log("FINISHED RENDER");
         if (error) {
 
             console.error(error);
