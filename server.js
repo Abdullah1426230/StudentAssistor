@@ -644,21 +644,23 @@ app.post(
                     "page"
                 );
 
-            execFile(
-                "pdftoppm",
-                [
-                    "-f",
-                    String(startPage),
+           execFile(
+    "pdftoppm",
+    [
+        "-f",
+        String(startPage),
 
-                    "-l",
-                    String(endPage),
+        "-l",
+        String(endPage),
 
-                    "-png",
+        "-png",
 
-                    pdfPath,
+        "-forcenum",
 
-                    outputPrefix
-                ],
+        pdfPath,
+
+        outputPrefix
+    ],
 
                 async (
                     error,
