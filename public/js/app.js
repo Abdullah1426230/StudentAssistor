@@ -1062,12 +1062,15 @@ async function renderPage(pageNumber) {
 
     currentPage = pageNumber;
 
+    const fileName =
+        String(pageNumber)
+            .padStart(4, "0");
+
     pageImage.src =
-        `/pages/page-${pageNumber}.png?${Date.now()}`;
+        `/pages/page-${fileName}.png?${Date.now()}`;
 
     pageNumberElement.textContent =
         pageNumber;
-
 }
 // async function renderPage(pageNumber) {
 
