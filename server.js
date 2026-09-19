@@ -581,16 +581,16 @@ app.put(
 
     }
 );
-console.log(
-    "RENDER ROUTE HIT",
-    req.body
-);
+
 app.post(
     "/api/render-pages",
     async (req, res) => {
 
         try {
-
+console.log(
+    "RENDER ROUTE HIT",
+    req.body
+);
             const {
                 filename,
                 page
