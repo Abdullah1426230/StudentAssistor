@@ -618,33 +618,44 @@ app.post(
             const endPage =
                 page + 3;
 
-            exec(
-                `"C:\\poppler\\Library\\bin\\pdftoppm.exe" \
-                -f ${startPage} \
-                -l ${endPage} \
-                -png \
-                "${pdfPath}" \
-                "${pagesDir}\\page"`,
+          const popplerCmd =
+    process.platform === "win32"
+        ? '"C:\\poppler\\Library\\bin\\pdftoppm.exe"'
+        : "pdftoppm";
 
-                (error) => {
+const outputPrefix =
+    path.join(
+        pagesDir,
+        "page"
+    );
 
-                    if (error) {
+exec(
+    `${popplerCmd}
+    -f ${startPage}
+    -l ${endPage}
+    -png
+    "${pdfPath}"
+    "${outputPrefix}"`,
 
-                        console.error(error);
+    (error) => {
 
-                        return res.status(500).json({
-                            success: false,
-                            error: error.message
-                        });
+        if (error) {
 
-                    }
+            console.error(error);
 
-                    res.json({
-                        success: true
-                    });
+            return res.status(500).json({
+                success: false,
+                error: error.message
+            });
 
-                }
-            );
+        }
+
+        res.json({
+            success: true
+        });
+
+    }
+);
 
         }
         catch (err) {
