@@ -1058,26 +1058,36 @@ async function extractTextWithLayout(page) {
     return result;
 
 }
-
 async function renderPage(pageNumber) {
 
     currentPage = pageNumber;
 
-    const fileName =
-        String(pageNumber)
-            .padStart(3, "0");
-
     pageImage.src =
-        `/pages/page-${fileName}.png?${Date.now()}`;
+        `/pages/page-${pageNumber}.png?${Date.now()}`;
 
     pageNumberElement.textContent =
         pageNumber;
 
-    console.log(
-        pageImage.src
-    );
-
 }
+// async function renderPage(pageNumber) {
+
+//     currentPage = pageNumber;
+
+//     const fileName =
+//         String(pageNumber)
+//             .padStart(3, "0");
+
+//     pageImage.src =
+//         `/pages/page-${fileName}.png?${Date.now()}`;
+
+//     pageNumberElement.textContent =
+//         pageNumber;
+
+//     console.log(
+//         pageImage.src
+//     );
+
+// }
 
 async function showPreviousPage() {
 
