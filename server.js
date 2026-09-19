@@ -8,7 +8,8 @@ const { v4: uuidv4 } = require("uuid");
 // const path = require("path");
 const { exec } = require("child_process");
 const app = express();
-
+const { execFile } =
+    require("child_process");
 
 // const fs =
 //     require("fs");
@@ -651,52 +652,33 @@ console.log(startPage, endPage);
 
     }
 );
-            console.log(
-    `${popplerCmd}
-    -f ${startPage}
-    -l ${endPage}
-    -png
-    "${pdfPath}"
-    "${outputPrefix}"`
-);
-exec(
-    `${popplerCmd}
-    -f ${startPage}
-    -l ${endPage}
-    -png
-    "${pdfPath}"
-    "${outputPrefix}"`,
+execFile(
+    "pdftoppm",
+    [
+        "-f", String(startPage),
+        "-l", String(endPage),
+        "-png",
+        pdfPath,
+        outputPrefix
+    ],
+    (error, stdout, stderr) => {
 
-    (error) => {
-console.log("FINISHED RENDER");
+        console.log("FINISHED RENDER");
+
         if (error) {
-
             console.error(error);
-
             return res.status(500).json({
                 success: false,
                 error: error.message
             });
-
         }
+
+        console.log(stdout);
+        console.log(stderr);
 
         res.json({
             success: true
         });
-
-    }
-);
-
-        }
-        catch (err) {
-
-            res.status(500).json({
-                success: false,
-                error: err.message
-            });
-
-        }
-
     }
 );
 app.use((req, res) => {
