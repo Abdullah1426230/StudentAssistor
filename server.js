@@ -635,6 +635,30 @@ const outputPrefix =
 console.log("START RENDER");
 console.log(pdfPath);
 console.log(startPage, endPage);
+            exec(
+    "which pdftoppm",
+    (err, stdout, stderr) => {
+
+        console.log(
+            "PDFTOPPM PATH:",
+            stdout
+        );
+
+        console.log(
+            "PDFTOPPM STDERR:",
+            stderr
+        );
+
+    }
+);
+            console.log(
+    `${popplerCmd}
+    -f ${startPage}
+    -l ${endPage}
+    -png
+    "${pdfPath}"
+    "${outputPrefix}"`
+);
 exec(
     `${popplerCmd}
     -f ${startPage}
