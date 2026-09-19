@@ -644,7 +644,7 @@ app.post(
                     "page"
                 );
 
-           execFile(
+execFile(
     "pdftoppm",
     [
         "-f",
@@ -655,62 +655,146 @@ app.post(
 
         "-png",
 
-        "-forcenum",
-
         pdfPath,
 
         outputPrefix
     ],
 
-                async (
-                    error,
-                    stdout,
-                    stderr
-                ) => {
+    async (
+        error,
+        stdout,
+        stderr
+    ) => {
 
-                    console.log(
-                        "FINISHED RENDER"
-                    );
+        if (error) {
 
-                    console.log(
-                        "STDOUT:",
-                        stdout
-                    );
+            console.error(error);
 
-                    console.log(
-                        "STDERR:",
-                        stderr
-                    );
+            return res.status(500).json({
+                success: false,
+                error: error.message
+            });
 
-                    if (error) {
+        }
 
-                        console.error(
-                            error
-                        );
-
-                        return res.status(500).json({
-                            success: false,
-                            error: error.message
-                        });
-
-                    }
-
-                    const files =
-                        await fs.readdir(
-                            pagesDir
-                        );
-
-                    console.log(
-                        "FILES:",
-                        files
-                    );
-
-                    res.json({
-                        success: true
-                    });
-
-                }
+        const files =
+            await fs.readdir(
+                pagesDir
             );
+
+        for (const file of files) {
+
+            const match =
+                file.match(
+                    /^page-(\d+)\.png$/
+                );
+
+            if (!match) continue;
+
+            const pageNum =
+                match[1];
+
+            const newName =
+                `page-${pageNum.padStart(4, "0")}.png`;
+
+            await fs.rename(
+                path.join(
+                    pagesDir,
+                    file
+                ),
+                path.join(
+                    pagesDir,
+                    newName
+                )
+            );
+
+        }
+
+        const renamedFiles =
+            await fs.readdir(
+                pagesDir
+            );
+
+        console.log(
+            "FILES:",
+            renamedFiles
+        );
+
+        res.json({
+            success: true
+        });
+
+    }
+);
+
+            
+    //        execFile(
+    // "pdftoppm",
+    // [
+    //     "-f",
+    //     String(startPage),
+
+    //     "-l",
+    //     String(endPage),
+
+    //     "-png",
+
+    //     "-forcenum",
+
+    //     pdfPath,
+
+    //     outputPrefix
+    // ],
+
+    //             async (
+    //                 error,
+    //                 stdout,
+    //                 stderr
+    //             ) => {
+
+    //                 console.log(
+    //                     "FINISHED RENDER"
+    //                 );
+
+    //                 console.log(
+    //                     "STDOUT:",
+    //                     stdout
+    //                 );
+
+    //                 console.log(
+    //                     "STDERR:",
+    //                     stderr
+    //                 );
+
+    //                 if (error) {
+
+    //                     console.error(
+    //                         error
+    //                     );
+
+    //                     return res.status(500).json({
+    //                         success: false,
+    //                         error: error.message
+    //                     });
+
+    //                 }
+
+    //                 const files =
+    //                     await fs.readdir(
+    //                         pagesDir
+    //                     );
+
+    //                 console.log(
+    //                     "FILES:",
+    //                     files
+    //                 );
+
+    //                 res.json({
+    //                     success: true
+    //                 });
+
+    //             }
+    //         );
 
         }
         catch (err) {
