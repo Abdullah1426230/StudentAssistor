@@ -588,10 +588,12 @@ app.post(
     async (req, res) => {
 
         try {
-console.log(
-    "RENDER ROUTE HIT",
-    req.body
-);
+
+            console.log(
+                "RENDER ROUTE HIT",
+                req.body
+            );
+
             const {
                 filename,
                 page
@@ -623,62 +625,105 @@ console.log(
             const endPage =
                 page + 3;
 
-          const popplerCmd =
-    process.platform === "win32"
-        ? '"C:\\poppler\\Library\\bin\\pdftoppm.exe"'
-        : "pdftoppm";
+            console.log(
+                "START RENDER"
+            );
 
-const outputPrefix =
-    path.join(
-        pagesDir,
-        "page"
-    );
-console.log("START RENDER");
-console.log(pdfPath);
-console.log(startPage, endPage);
-            exec(
-    "which pdftoppm",
-    (err, stdout, stderr) => {
+            console.log(
+                pdfPath
+            );
 
-        console.log(
-            "PDFTOPPM PATH:",
-            stdout
-        );
+            console.log(
+                startPage,
+                endPage
+            );
 
-        console.log(
-            "PDFTOPPM STDERR:",
-            stderr
-        );
+            const outputPrefix =
+                path.join(
+                    pagesDir,
+                    "page"
+                );
 
-    }
-);
-execFile(
-    "pdftoppm",
-    [
-        "-f", String(startPage),
-        "-l", String(endPage),
-        "-png",
-        pdfPath,
-        outputPrefix
-    ],
-    (error, stdout, stderr) => {
+            execFile(
+                "pdftoppm",
+                [
+                    "-f",
+                    String(startPage),
 
-        console.log("FINISHED RENDER");
+                    "-l",
+                    String(endPage),
 
-        if (error) {
-            console.error(error);
-            return res.status(500).json({
+                    "-png",
+
+                    pdfPath,
+
+                    outputPrefix
+                ],
+
+                async (
+                    error,
+                    stdout,
+                    stderr
+                ) => {
+
+                    console.log(
+                        "FINISHED RENDER"
+                    );
+
+                    console.log(
+                        "STDOUT:",
+                        stdout
+                    );
+
+                    console.log(
+                        "STDERR:",
+                        stderr
+                    );
+
+                    if (error) {
+
+                        console.error(
+                            error
+                        );
+
+                        return res.status(500).json({
+                            success: false,
+                            error: error.message
+                        });
+
+                    }
+
+                    const files =
+                        await fs.readdir(
+                            pagesDir
+                        );
+
+                    console.log(
+                        "FILES:",
+                        files
+                    );
+
+                    res.json({
+                        success: true
+                    });
+
+                }
+            );
+
+        }
+        catch (err) {
+
+            console.error(
+                err
+            );
+
+            res.status(500).json({
                 success: false,
-                error: error.message
+                error: err.message
             });
+
         }
 
-        console.log(stdout);
-        console.log(stderr);
-
-        res.json({
-            success: true
-        });
     }
 );
 app.use((req, res) => {
